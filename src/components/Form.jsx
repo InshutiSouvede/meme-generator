@@ -1,14 +1,18 @@
 import { useState } from 'react'
 import memes from '../memeData'
 export default function Form() {
-   
-                
-    const [memeImage,setMemeImage] = useState("")
+    const [allImage,setAllImage] = useState(memes)
+    const [meme,setMeme] = useState({
+        topText:"",
+        bottomText:"",
+        randomImage:""
+    })
     function getMemeImage() {
-        const memesArray = memes.data.memes
+        const memesArray = allImage.data.memes
         const random = Math.floor(Math.random() * memesArray.length)
-        // console.log("url: ", memesArray[random].url)
-        setMemeImage(memesArray[random].url)
+        setMeme((prev)=>{
+            return {...prev,randomImage:memesArray[random].url}
+        })
     }
     return (
         <main className='xl:w-2/4 m-auto'>
@@ -23,7 +27,7 @@ export default function Form() {
                 </div>
                 <button type="button" onClick={getMemeImage} className="bg-[#711F8D] cursor-pointer  col-span-2 bg-gradient-to-r text-white rounded-md py-4">Get a new meme image  🖼</button>
             </form>
-            {memeImage&&<img className='rounded-md w-[700px] object-center m-auto my-5' src={memeImage} alt="" />}
+            {meme.randomImage&&<img className='rounded-md w-[700px] object-center m-auto my-5' src={meme.randomImage} alt="" />}
         </main>
 
     )
